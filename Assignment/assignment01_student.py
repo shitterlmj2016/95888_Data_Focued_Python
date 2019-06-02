@@ -33,6 +33,16 @@ def parse_claims_into_csv(bundle_path, output_path, claims_file_name):
         output_path {String} -- path to the output directory for this assignment e.g. ~/assignments/out
         claims_file_name {String} -- claims file name e.g. claims.csv
     """
+    files = os.listdir(bundle_path)
+    claims = []
+    for file in files:
+        if not os.path.isdir(file):
+            path = bundle_path + "/" + file
+            #print(path)
+            my_bundle = parse_bundle_for_file(path)
+            claims += get_claims_from_bundle(my_bundle)
+            write_claims_to_csv(claims, output_path, claims_file_name)
+
     # my_bundle = parse_bundle_for_file(os.path.abspath(bundle_path))
     #
     # claims = get_claims_from_bundle(my_bundle)
@@ -52,7 +62,7 @@ def parse_bundle_for_file(fhir_bundle_path):
         fhir bundle file passed into the function
     """
 
-    with open(fhir_bundle_path, 'r') as f:
+    with open(fhir_bundle_path, 'r', encoding='UTF-8') as f:
         bundle = bu.Bundle(json.load(f))
         return bundle
 
@@ -105,6 +115,7 @@ def write_claims_to_csv(claims, output_path, claims_file_name, new_file=True):
 
     for i in claims:
         csv_write.writerow(get_csv_values_from_claim(i))
+
     file.close()
 
 
@@ -151,9 +162,9 @@ def get_parsed_args():
 
 
 if __name__ == "__main__":
-    # parsed_args = get_parsed_args()
-    # parse_claims_into_csv(parsed_args.fhir, parsed_args.output, 'claims.csv')
-    bundle = parse_bundle_for_file(
-        'C:\\Users\\91593\\Desktop\\Python\\synthea\\output\\fhir\\Devin82_Goodwin327_bf81fdbc-f176-4b27-a50d-aac42654a3d2.json')
-    list = get_claims_from_bundle(bundle)
-    write_claims_to_csv(list, 'C:\\Users\\91593\\Desktop', 'test.csv')
+    parsed_args = get_parsed_args()
+    parse_claims_into_csv(parsed_args.fhir, parsed_args.output, 'claims.csv')
+    # bundle = parse_bundle_for_file(
+    #     'C:\\Users\\91593\\Desktop\\Python\\synthea\\output\\fhir\\Devin82_Goodwin327_bf81fdbc-f176-4b27-a50d-aac42654a3d2.json')
+    # list = get_claims_from_bundle(bundle)
+    # write_claims_to_csv(list, 'C:\\Users\\91593\\Desktop', 'test.csv')
