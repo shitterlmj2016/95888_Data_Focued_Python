@@ -2,8 +2,8 @@ import os
 import json
 import csv
 import argparse
-import fhirclient.models.bundle
-import fhirclient.models.claim
+import fhirclient.models.bundle as bu
+import fhirclient.models.claim as cl
 
 """In this assignment you will generate a set of synthetic healthcare data 
 using the synthea tool discussed in class. For the purposes of the assignment
@@ -28,13 +28,16 @@ def parse_claims_into_csv(bundle_path, output_path, claims_file_name):
     Hint : call parse_bundle_for_file
     Hint : call get_claims_from_bundle
     Hint : call write_claims_to_csv
-
     Arguments:
         bundle_path {String} -- path to the fhir data directory for this assignment e.g. ~/assignments/data/fhir
         output_path {String} -- path to the output directory for this assignment e.g. ~/assignments/out
         claims_file_name {String} -- claims file name e.g. claims.csv
     """
-    pass
+    # my_bundle = parse_bundle_for_file(os.path.abspath(bundle_path))
+    #
+    # claims = get_claims_from_bundle(my_bundle)
+    #
+    # write_claims_to_csv(claims, os.path.abspath(output_path), claims_file_name)
 
 
 def parse_bundle_for_file(fhir_bundle_path):
@@ -48,7 +51,13 @@ def parse_bundle_for_file(fhir_bundle_path):
         fhirclient.models.bundle.Bundle -- fhir bundle class object for the
         fhir bundle file passed into the function
     """
-    pass
+
+    with open(fhir_bundle_path, 'r') as f:
+        bundle = bu.Bundle(json.load(f))
+        for i in bundle.entry:
+            rs = i.resource
+            print(isinstance(rs, cl.Claim))
+        return bundle
 
 
 def get_claims_from_bundle(bundle):
@@ -63,7 +72,12 @@ def get_claims_from_bundle(bundle):
         list -- list of all fhir fhirclient.models.claim.Claim resources 
         contained within a single fhir bundle
     """
-    pass
+    dic = bundle.as_json()
+    #dic.get()
+    dic = json.dumps(dic, sort_keys=True, indent=4, separators=(',', ': '))
+    #print(dic)
+    cl.Claim(dic)
+
 
 
 def write_claims_to_csv(claims, output_path, claims_file_name, new_file=True):
@@ -111,11 +125,16 @@ def get_csv_values_from_claim(claim):
 
 def get_parsed_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-f", "--fhir", default="data/fhir/", help="path to the fhir data directory for this assignment e.g. ~/assignments/data/fhir")
-    parser.add_argument("-o", "--output", default="out/", help="path to the output directory for this assignment e.g. ~/assignments/out")
+    parser.add_argument("-f", "--fhir", default="data/fhir/",
+                        help="path to the fhir data directory for this assignment e.g. ~/assignments/data/fhir")
+    parser.add_argument("-o", "--output", default="out/",
+                        help="path to the output directory for this assignment e.g. ~/assignments/out")
     return parser.parse_args()
 
 
 if __name__ == "__main__":
-    parsed_args = get_parsed_args()
-    parse_claims_into_csv(parsed_args.fhir, parsed_args.output, 'claims.csv')
+    # parsed_args = get_parsed_args()
+    # parse_claims_into_csv(parsed_args.fhir, parsed_args.output, 'claims.csv')
+    bundle = parse_bundle_for_file(
+        'C:\\Users\\91593\\Desktop\\Python\\synthea\\output\\fhir\\Devin82_Goodwin327_bf81fdbc-f176-4b27-a50d-aac42654a3d2.json')
+    #get_claims_from_bundle(bundle)
