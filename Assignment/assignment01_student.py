@@ -54,9 +54,6 @@ def parse_bundle_for_file(fhir_bundle_path):
 
     with open(fhir_bundle_path, 'r') as f:
         bundle = bu.Bundle(json.load(f))
-        for i in bundle.entry:
-            rs = i.resource
-            print(isinstance(rs, cl.Claim))
         return bundle
 
 
@@ -72,12 +69,12 @@ def get_claims_from_bundle(bundle):
         list -- list of all fhir fhirclient.models.claim.Claim resources 
         contained within a single fhir bundle
     """
-    dic = bundle.as_json()
-    #dic.get()
-    dic = json.dumps(dic, sort_keys=True, indent=4, separators=(',', ': '))
-    #print(dic)
-    cl.Claim(dic)
-
+    list = []
+    for i in bundle.entry:
+        rs = i.resource
+        if isinstance(rs, cl.Claim):
+            list.append(rs)
+    return list
 
 
 def write_claims_to_csv(claims, output_path, claims_file_name, new_file=True):
@@ -94,7 +91,21 @@ def write_claims_to_csv(claims, output_path, claims_file_name, new_file=True):
         claims_file_name {String} -- claims file name e.g. claims.csv
         new_file {Boolean} -- indicates if a csv file should be created or updated
     """
-    pass
+    output_path = output_path + "/" + claims_file_name
+
+    if new_file:
+        file = open(output_path, 'w', newline='')
+    else:
+        file = open(output_path, 'a+', newline='')
+    csv_write = csv.writer(file)
+
+    if new_file:
+        csv_head = ['status', 'use', 'billable_period_start', 'billable_period_end', 'total', 'currency']
+        csv_write.writerow(csv_head)
+
+    for i in claims:
+        csv_write.writerow(get_csv_values_from_claim(i))
+    file.close()
 
 
 def get_csv_values_from_claim(claim):
@@ -104,7 +115,7 @@ def get_csv_values_from_claim(claim):
 
     status
     use
-    billiable_period_start as an iso string
+    billable_period_start as an iso string
     billable_period_end as an iso string
     total
     currency
@@ -118,7 +129,14 @@ def get_csv_values_from_claim(claim):
     Returns:
         list -- list of String values
     """
-    pass
+    list = [];
+    list.append(claim.status)
+    list.append(claim.use)  # ????
+    list.append(claim.billablePeriod.start.isostring)
+    list.append(claim.billablePeriod.end.isostring)
+    list.append(str(claim.total.value))
+    list.append(claim.total.currency)
+    return list
 
 
 # DO NOT MODIFY BELOW THIS LINE
@@ -137,4 +155,5 @@ if __name__ == "__main__":
     # parse_claims_into_csv(parsed_args.fhir, parsed_args.output, 'claims.csv')
     bundle = parse_bundle_for_file(
         'C:\\Users\\91593\\Desktop\\Python\\synthea\\output\\fhir\\Devin82_Goodwin327_bf81fdbc-f176-4b27-a50d-aac42654a3d2.json')
-    #get_claims_from_bundle(bundle)
+    list = get_claims_from_bundle(bundle)
+    write_claims_to_csv(list, 'C:\\Users\\91593\\Desktop', 'test.csv')
