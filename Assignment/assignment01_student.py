@@ -23,7 +23,7 @@ def parse_claims_into_csv(bundle_path, output_path, claims_file_name):
     fhirclient bundle objects, parses out claims data, writes claims data to a
     csv file.
 
-    Hint : translate relative to absolute paths 
+    Hint : translate relative to absolute paths
     Hint : walk the subdirectory to find files
     Hint : call parse_bundle_for_file
     Hint : call get_claims_from_bundle
@@ -38,16 +38,9 @@ def parse_claims_into_csv(bundle_path, output_path, claims_file_name):
     for file in files:
         if not os.path.isdir(file):
             path = bundle_path + "/" + file
-            #print(path)
             my_bundle = parse_bundle_for_file(path)
             claims += get_claims_from_bundle(my_bundle)
-            write_claims_to_csv(claims, output_path, claims_file_name)
-
-    # my_bundle = parse_bundle_for_file(os.path.abspath(bundle_path))
-    #
-    # claims = get_claims_from_bundle(my_bundle)
-    #
-    # write_claims_to_csv(claims, os.path.abspath(output_path), claims_file_name)
+    write_claims_to_csv(claims, output_path, claims_file_name)
 
 
 def parse_bundle_for_file(fhir_bundle_path):
@@ -106,7 +99,7 @@ def write_claims_to_csv(claims, output_path, claims_file_name, new_file=True):
     if new_file:
         file = open(output_path, 'w', newline='')
     else:
-        file = open(output_path, 'a+', newline='')
+        file = open(output_path, 'a', newline='')
     csv_write = csv.writer(file)
 
     if new_file:
@@ -142,7 +135,7 @@ def get_csv_values_from_claim(claim):
     """
     list = [];
     list.append(claim.status)
-    list.append(claim.use)  # ????
+    list.append(claim.use)
     list.append(claim.billablePeriod.start.isostring)
     list.append(claim.billablePeriod.end.isostring)
     list.append(str(claim.total.value))
@@ -164,7 +157,3 @@ def get_parsed_args():
 if __name__ == "__main__":
     parsed_args = get_parsed_args()
     parse_claims_into_csv(parsed_args.fhir, parsed_args.output, 'claims.csv')
-    # bundle = parse_bundle_for_file(
-    #     'C:\\Users\\91593\\Desktop\\Python\\synthea\\output\\fhir\\Devin82_Goodwin327_bf81fdbc-f176-4b27-a50d-aac42654a3d2.json')
-    # list = get_claims_from_bundle(bundle)
-    # write_claims_to_csv(list, 'C:\\Users\\91593\\Desktop', 'test.csv')
