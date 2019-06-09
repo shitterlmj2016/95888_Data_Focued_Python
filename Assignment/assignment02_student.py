@@ -34,7 +34,7 @@ def get_patient_ssn(patient_bundle):
     id = patient_bundle['identifier']
     for map in id:
         if 'type' in map.keys():
-            if map['type']['coding'][0]['code'] == 'SS':
+            if map['system'] == 'http://hl7.org/fhir/sid/us-ssn':
                 return map['value']
 
 
@@ -70,10 +70,13 @@ def get_patient_race(patient_resource):
     Returns:
         tuple -- Tuple containing the system, code, and display
     """
-    #pprint(patient_resource['extension'])
-    map = patient_resource['extension'][0]['extension'][0]['valueCoding']
-    my_tuple = (map['system'], map['code'], map['display'])
-    return my_tuple
+    for ext in patient_resource['extension']:
+        if (ext['url'] == 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-race'):
+            for map in ext['extension']:
+                if 'valueCoding' in map:
+                    vc = map['valueCoding']
+                    my_tuple = (vc['system'], vc['code'], vc['display'])
+                    return my_tuple
 
 
 def get_patient_birth_place(patient_resource):
@@ -89,9 +92,8 @@ def get_patient_birth_place(patient_resource):
     for map in patient_resource['extension']:
         if ('valueAddress' in map):
             birth_place = map['valueAddress']
-            my_tuple =(birth_place['city'], birth_place['state'], birth_place['country'])
+            my_tuple = (birth_place['city'], birth_place['state'], birth_place['country'])
             return my_tuple
-
 
 
 def load_bundle(fhir_bundle_path):
@@ -101,31 +103,19 @@ def load_bundle(fhir_bundle_path):
 
 
 if __name__ == "__main__":
-    # bundle = load_bundle('data/fhir/Albina13_Stehr398_a086ee39-c8d2-4cd4-8fe1-f5367e80a370.json')
-    #
-    # patient = get_patient_resource(bundle)
-    # print("***** Patient\n", patient, "\n")
-    #
-    # ssn = get_patient_ssn(patient)
-    # print("***** Patient SSN\n", ssn, "\n")
-    #
-    # name = get_patient_name(patient)
-    # print("***** Patient Name\n", name, "\n")
-    #
-    # system, code, display = get_patient_race(patient)
-    # print("*** Patient Race\n", system, code, display, "\n")
-    #
-    # birth_place_city, birth_place_state, birth_place_country = get_patient_birth_place(patient)
-    # print("*** Patient Birth Place\n", birth_place_city, birth_place_state, birth_place_country, "\n")
+    bundle = load_bundle('data/fhir/Albina13_Stehr398_a086ee39-c8d2-4cd4-8fe1-f5367e80a370.json')
 
-    bundle = load_bundle(
-        'C:/Users/91593/Desktop/Python/synthea/output/fhir/Devin82_Goodwin327_bf81fdbc-f176-4b27-a50d-aac42654a3d2.json')
     patient = get_patient_resource(bundle)
+    print("***** Patient\n", patient, "\n")
+
     ssn = get_patient_ssn(patient)
-    print(ssn)
+    print("***** Patient SSN\n", ssn, "\n")
+
     name = get_patient_name(patient)
-    print(name)
-    race = get_patient_race(patient)
-    print(race)
-    city = get_patient_birth_place(patient)
-    print(city)
+    print("***** Patient Name\n", name, "\n")
+
+    system, code, display = get_patient_race(patient)
+    print("*** Patient Race\n", system, code, display, "\n")
+
+    birth_place_city, birth_place_state, birth_place_country = get_patient_birth_place(patient)
+    print("*** Patient Birth Place\n", birth_place_city, birth_place_state, birth_place_country, "\n")
