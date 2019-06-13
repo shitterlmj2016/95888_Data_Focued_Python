@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Assignment" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/W3" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/W2" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
     <orderEntry type="inheritedJdk" />
