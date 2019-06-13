@@ -89,6 +89,7 @@ def get_patient_birth_place(patient_resource):
     Returns:
         tuple -- Tuple containing the city, state, and country
     """
+    #'C:/Users/91593/Desktop/Python/synthea/output/fhir/Albina13_Stehr398_a086ee39c8d24cd48fe1f5367e80a370.json'
     for map in patient_resource['extension']:
         if ('valueAddress' in map):
             birth_place = map['valueAddress']
