@@ -1,5 +1,4 @@
 import math
 
-a = [1, 6, 8, 34, 63, 242]
-b = [x for x in a if x % 2 == 0]
-print(b)
+a = {1: 'a', 2: 'b', 3: 'c'}
+print({k + 1: v for (k, v) in a.items() if k > 1 if k < 3})
