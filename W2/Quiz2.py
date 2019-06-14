@@ -19,6 +19,7 @@
 
 
 2. f = open('file.txt')
+2. f = open('file.txt')
 f = open("test.txt", 'w')  # write in text mode
 f = open("python.png",'r+b') # read and write in binary mode
 f = open("file.txt", mode='r', encoding='utf-8')
@@ -57,24 +58,35 @@ print(s)
 
 
 #csv
-# open and print line by line
-# with open('mock.csv') as f:
-#     for line in f:
-#         print(line)
-#
-# with open('mock.csv') as f:
-#     # use enumerate to get the index as you iterate
-#     for index, line in enumerate(f):
-#         print(index, line)
-#
-# with open('mock.csv') as f:
-#     for index, line in enumerate(f):
-#         # handle the header differently
-#         if index == 0:
-#             print("header", index, line)
-#         else:
-#             print("row", index, line)
+#open and print line by line
+with open('mock.csv') as f:
+    for line in f:
+        print(line)
 
+with open('mock.csv') as f:
+    # use enumerate to get the index as you iterate
+    for index, line in enumerate(f):
+        print(index, line)
+
+with open('mock.csv') as f:
+    for index, line in enumerate(f):
+        # handle the header differently
+        if index == 0:
+            print("header", index, line)
+        else:
+            print("row", index, line)
+
+headers = []
+rows = []
+with open('mock.csv') as f:
+    for index, line in enumerate(f):
+        if index == 0:
+            headers = line.split(',')
+        else:
+            # append the rows
+            rows.append(line.split(','))
+print('header fields', headers)
+print('rows fields', rows)
 
 import csv
 with open('mock.csv') as f:
@@ -106,7 +118,24 @@ with open('scores.csv', mode='w') as employee_file:
     writer.writerow(['2019-05-01', 'Pirates', 0, 'Cubs', 10])
     writer.writerow(['2019-05-15', 'Reds', 7, 'Pirates', 0])
 
+'''
+delimiter specifies the character used to separate each field. The default is the comma (',').
+quotechar specifies the character used to surround fields that contain the delimiter character. The default is a double quote (' " ').
+escapechar specifies the character used to escape the delimiter character, in case quotes aren’t used. The default is no escape character.
+'''
+
 # csv write dictionary
+with open('scores.csv', mode='w') as csv_file:
+    fieldnames = ['date', 'home_team', 'home_score', 'away_team', 'away_score']
+    writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+
+    writer.writeheader()
+    writer.writerow({'date': '2019-05-01', 'home_team': 'Pirates', 'home_score': 0, 'away_team': 'Cubs', 'away_score': 10})
+    writer.writerow({'date': '2019-05-15', 'home_team': 'Reds', 'home_score': 7, 'away_team': 'Pirates', 'away_score': 0})
+
+
+# Writing CSV File From a Dictionary With csv
+
 with open('scores.csv', mode='w') as csv_file:
     fieldnames = ['date', 'home_team', 'home_score', 'away_team', 'away_score']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
