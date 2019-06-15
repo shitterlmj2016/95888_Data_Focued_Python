@@ -1,0 +1,150 @@
+{
+    "Id": "c09181f8-6526-4de7-87c7-25c95ccdbdea",
+    "BIRTHDATE": "2014-06-06",
+    "FIRST": "Lizbeth716",
+    "LAST": "Hackett68",
+    "GENDER": "F",
+    "ENCOUNTERS": {
+        "2b40021b-f74d-47aa-a53e-2f977934a80e": {
+            "Id": "2b40021b-f74d-47aa-a53e-2f977934a80e",
+            "START": "2014-06-06T11:45:32Z",
+            "STOP": "2014-06-06T12:15:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "35f43bc3-9aa7-41eb-93e9-e85328634f8a": {
+            "Id": "35f43bc3-9aa7-41eb-93e9-e85328634f8a",
+            "START": "2014-07-11T11:45:32Z",
+            "STOP": "2014-07-11T12:00:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "b5afaee7-4bf8-41cc-8441-216998dd53ac": {
+            "Id": "b5afaee7-4bf8-41cc-8441-216998dd53ac",
+            "START": "2014-09-12T11:45:32Z",
+            "STOP": "2014-09-12T12:00:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "b3eb97db-6c12-4e33-a885-741ec943901a": {
+            "Id": "b3eb97db-6c12-4e33-a885-741ec943901a",
+            "START": "2014-11-14T11:45:32Z",
+            "STOP": "2014-11-14T12:00:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "4d418af7-d5c5-4f83-9807-d8f5763157e7": {
+            "Id": "4d418af7-d5c5-4f83-9807-d8f5763157e7",
+            "START": "2015-02-13T11:45:32Z",
+            "STOP": "2015-02-13T12:00:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "7bb7c2b1-4edb-4ae0-9d1d-1eaf3ea21f73": {
+            "Id": "7bb7c2b1-4edb-4ae0-9d1d-1eaf3ea21f73",
+            "START": "2015-05-15T11:45:32Z",
+            "STOP": "2015-05-15T12:00:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "37ce8bd3-3c43-48d7-8496-de46638cbe74": {
+            "Id": "37ce8bd3-3c43-48d7-8496-de46638cbe74",
+            "START": "2015-08-14T11:45:32Z",
+            "STOP": "2015-08-14T12:15:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "90021ec6-d6bf-4f41-a4c7-cff26c77c4af": {
+            "Id": "90021ec6-d6bf-4f41-a4c7-cff26c77c4af",
+            "START": "2015-11-13T11:45:32Z",
+            "STOP": "2015-11-13T12:00:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "fd585f1a-57ae-4c13-87aa-eef64e60adfb": {
+            "Id": "fd585f1a-57ae-4c13-87aa-eef64e60adfb",
+            "START": "2016-01-01T11:45:32Z",
+            "STOP": "2016-01-01T12:15:32Z",
+            "CODE": "185345009",
+            "DESCRIPTION": "Encounter for symptom"
+        },
+        "3a1ab7c2-9ea5-435d-ab62-d38972edae72": {
+            "Id": "3a1ab7c2-9ea5-435d-ab62-d38972edae72",
+            "START": "2016-05-13T11:45:32Z",
+            "STOP": "2016-05-13T12:00:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "9843d16b-2fa4-48d8-8622-ec311926c95c": {
+            "Id": "9843d16b-2fa4-48d8-8622-ec311926c95c",
+            "START": "2016-11-11T11:45:32Z",
+            "STOP": "2016-11-11T12:15:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "09618498-8249-4677-aedb-965715e047de": {
+            "Id": "09618498-8249-4677-aedb-965715e047de",
+            "START": "2017-05-12T11:45:32Z",
+            "STOP": "2017-05-12T12:00:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "fab08046-0c79-4e8e-9fbd-1d0e937a9cce": {
+            "Id": "fab08046-0c79-4e8e-9fbd-1d0e937a9cce",
+            "START": "2017-05-21T11:45:32Z",
+            "STOP": "2017-05-21T12:00:32Z",
+            "CODE": "185345009",
+            "DESCRIPTION": "Encounter for symptom"
+        },
+        "6ec4fb18-19d5-49db-b7c0-717c704a6f2a": {
+            "Id": "6ec4fb18-19d5-49db-b7c0-717c704a6f2a",
+            "START": "2017-11-10T11:45:32Z",
+            "STOP": "2017-11-10T12:00:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        },
+        "02b315f5-73cd-40c5-bcd0-9c2e36728e2d": {
+            "Id": "02b315f5-73cd-40c5-bcd0-9c2e36728e2d",
+            "START": "2017-12-29T11:45:32Z",
+            "STOP": "2017-12-29T12:00:32Z",
+            "CODE": "185345009",
+            "DESCRIPTION": "Encounter for symptom"
+        },
+        "eb60adad-568b-4062-8047-9e0edb8e2a18": {
+            "Id": "eb60adad-568b-4062-8047-9e0edb8e2a18",
+            "START": "2018-05-11T11:45:32Z",
+            "STOP": "2018-05-11T12:00:32Z",
+            "CODE": "185349003",
+            "DESCRIPTION": "Encounter for check up (procedure)"
+        }
+    },
+    "MEDICATIONS": {
+        "309097": [
+            {
+                "ENCOUNTER": "fab08046-0c79-4e8e-9fbd-1d0e937a9cce",
+                "START": "2017-05-21",
+                "STOP": "2017-06-04",
+                "CODE": "309097",
+                "DESCRIPTION": "Cefuroxime 250 MG Oral Tablet"
+            }
+        ],
+        "198405": [
+            {
+                "ENCOUNTER": "fab08046-0c79-4e8e-9fbd-1d0e937a9cce",
+                "START": "2017-05-21",
+                "STOP": "2017-06-04",
+                "CODE": "198405",
+                "DESCRIPTION": "Ibuprofen 100 MG Oral Tablet"
+            }
+        ],
+        "834061": [
+            {
+                "ENCOUNTER": "02b315f5-73cd-40c5-bcd0-9c2e36728e2d",
+                "START": "2017-12-29",
+                "STOP": "2018-01-05",
+                "CODE": "834061",
+                "DESCRIPTION": "Penicillin V Potassium 250 MG Oral Tablet"
+            }
+        ]
+    }
+}
