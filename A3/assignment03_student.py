@@ -75,7 +75,7 @@ def add_encounters_to_patients(patients, encounters_file_name, resource_name='EN
                         'CODE',
                         'DESCRIPTION'}}
             patient[resource_name][id] = sub_dic
-    return patients
+        return patients
 
 
 def add_medications_to_patients(patients, medications_file_name, resource_name='MEDICATIONS'):
@@ -104,7 +104,7 @@ def add_medications_to_patients(patients, medications_file_name, resource_name='
             patient_id = line['PATIENT']
             patient = patients[patient_id]
             if resource_name not in patient.keys():
-                patient[resource_name] = []
+                patient[resource_name] = {}
 
             sub_dic = {k: line[k] for k in
                        {'ENCOUNTER',
@@ -112,8 +112,10 @@ def add_medications_to_patients(patients, medications_file_name, resource_name='
                         'STOP',
                         'CODE',
                         'DESCRIPTION'}}
-            patient[resource_name].append(sub_dic)
-    return patients
+            if sub_dic['CODE'] not in patient[resource_name].keys():
+                patient[resource_name][sub_dic['CODE']] = []
+            patient[resource_name][sub_dic['CODE']].append(sub_dic)
+        return patients
 
 
 def problem1(patients):
@@ -129,9 +131,9 @@ def problem1(patients):
     z = set()
     for patient in patients.values():
         if ('MEDICATIONS' in patient.keys()):
-            for map in patient['MEDICATIONS']:
-                z.add(map['CODE'])
-    return z
+            for code in patient['MEDICATIONS'].keys():
+                z.add(code)
+    return list(z)
 
 
 def problem2(patients):
@@ -149,14 +151,13 @@ def problem2(patients):
     """
     z = set()
     for patient in patients.values():
-        # pprint(patient)
         if ('MEDICATIONS' in patient.keys()):
-            for map in patient['MEDICATIONS']:
-                encounter = map['ENCOUNTER']
-                med_description = map['DESCRIPTION']
-                enc_description = patient['ENCOUNTERS'][encounter]['DESCRIPTION']
-                z.add((enc_description, med_description))
-    # distinct
+            for l in patient['MEDICATIONS'].values():
+                for map in l:
+                    encounter = map['ENCOUNTER']
+                    med_description = map['DESCRIPTION']
+                    enc_description = patient['ENCOUNTERS'][encounter]['DESCRIPTION']
+                    z.add((enc_description, med_description))
     return list(z)
 
 
@@ -193,13 +194,17 @@ def problem3(medications_path="data/csv/medications.csv", expenses_out="out/expe
             dic[code]['appeared'] += 1
             dic[code]['dispenses'] += int(line['DISPENSES'])
 
+        index = sorted(dic, key=lambda k: dic[k]['dispenses'], reverse=True)
+        list = []
+        for k in index:
+            list.append([k, dic[k]['appeared'], dic[k]['dispenses']])
+
         with open(expenses_out, 'w', newline='') as csv_file:
             fieldnames = ['code', 'no. of times appeared', 'no. of dispenses']
             writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
             writer.writeheader()
-            for k in dic.keys():
-                v = dic[k]
-                writer.writerow({'code': k, 'no. of times appeared': v['appeared'], 'no. of dispenses': v['dispenses']})
+            for item in list:
+                writer.writerow({'code': item[0], 'no. of times appeared': item[1], 'no. of dispenses': item[2]})
 
 
 # do not modify below this line
@@ -211,27 +216,18 @@ def write_ndjson(file_name, patients):
 
 
 if __name__ == "__main__":
-    # # part 1
-    # patients = create_patient_dictionary('data/csv/patients.csv')
-    # add_encounters_to_patients(patients, 'data/csv/encounters.csv')
-    # add_medications_to_patients(patients, 'data/csv/medications.csv')
-    #
-    # write_ndjson('out/assignment03.ndjson', patients)
-    #
-    # # part 2
-    # codes = problem1(patients)
-    # print(codes)
-    # descriptions = problem2(patients)
-    # print(descriptions)
-    #
-    # # part 3
-    # problem3("data/csv/medications.csv", "out/expenses.csv")
+    # part 1
+    patients = create_patient_dictionary('data/csv/patients.csv')
+    add_encounters_to_patients(patients, 'data/csv/encounters.csv')
+    add_medications_to_patients(patients, 'data/csv/medications.csv')
 
-    # patients = create_patient_dictionary('data/csv/patients.csv')
-    # add_encounters_to_patients(patients, 'data/csv/encounters.csv')
-    # add_medications_to_patients(patients, 'data/csv/medications.csv')
-    # # write_ndjson('out/assignment03.ndjson', patients)
-    # codes = problem1(patients)
-    # descriptions = problem2(patients)
-    # print(descriptions)
+    write_ndjson('out/assignment03.ndjson', patients)
+
+    # part 2
+    codes = problem1(patients)
+    print(codes)
+    descriptions = problem2(patients)
+    print(descriptions)
+
+    # part 3
     problem3("data/csv/medications.csv", "out/expenses.csv")
