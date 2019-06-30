@@ -184,23 +184,30 @@ def plot_by_gender_and_mortality(bundle_path, figure_name='q4_by_gender_and_mort
     """
     files = os.listdir(bundle_path)
     map = {'male': 0, 'female': 0}
+    map_live = {'male': 0, 'female': 0}
     for file in files:
         if not os.path.isdir(file):
             path = bundle_path + "/" + file
             dic = read_file(path)
             if dic["entry"][0]["resource"]["resourceType"] != "Patient": continue
+            dead = False
             for entry in dic["entry"]:
                 if "deceasedDateTime" in entry["resource"].keys():
                     map[entry["resource"]["gender"]] += 1
+                    dead = True
+            if not dead:
+                map_live[dic["entry"][0]["resource"]["gender"]] += 1
     figure, ax = plt.subplots()
     ax.set_xticks([x for x in range(0, 5)])
-    ax.bar(1, map['male'], color="darkblue")
-    ax.bar(3, map['female'], color="darkred")
+    ax.bar(0.5, map['male'], color="darkblue")
+    ax.bar(1.5, map['female'], color="darkred")
+    ax.bar(2.5, map_live['male'], color="darkblue")
+    ax.bar(3.5, map_live['female'], color="darkred")
 
     ax.set_xlabel('Gender')
     ax.set_title("Mortality by Gender")
     ax.legend(['male', 'female'])
-    ax.set_xticklabels([" ", "male", " ", "female", " "])
+    ax.set_xticklabels([" ", "DEAD", " ", "ALIVE", " "])
     plt.savefig(figure_name)
 
 
@@ -276,7 +283,7 @@ def plot_challenge_question_1(bundle_path, figure_name='q6_challenge_question_1.
     x_list.append(" ")
 
     ax.set_xticklabels(x_list)
-    ax.set_title("Mortality by Gender and Race")
+    ax.set_title("Death  by Gender and Race")
 
     start = 1
     for gender in map.keys():
@@ -327,7 +334,7 @@ def plot_challenge_question_2(bundle_path, figure_name='q7_challenge_question_2.
     x_list.append(" ")
 
     ax.set_xticklabels(x_list)
-    ax.set_title("Mortality by Gender and Country")
+    ax.set_title("Death Count by Gender and Country")
     start = 1
     for gender in map.keys():
         ax.bar(start - 0.5, map[gender]['male'], color="darkblue")
@@ -388,11 +395,11 @@ def plot_challenge_question_3(bundle_path, figure_name='q8_challenge_question_3.
 if __name__ == "__main__":
     bundle_path = sys.argv[1]
 
-    plot_age_by_gender(bundle_path)
-    plot_by_gender_and_race(bundle_path)
-    plot_by_gender_and_birth_country(bundle_path)
+    # plot_age_by_gender(bundle_path)
+    # plot_by_gender_and_race(bundle_path)
+    # plot_by_gender_and_birth_country(bundle_path)
     plot_by_gender_and_mortality(bundle_path)
-    plot_condition_comorbidity_matrix(bundle_path)
-    plot_challenge_question_1(bundle_path)
-    plot_challenge_question_2(bundle_path)
-    plot_challenge_question_3(bundle_path)
+    # plot_condition_comorbidity_matrix(bundle_path)
+    # plot_challenge_question_1(bundle_path)
+    # plot_challenge_question_2(bundle_path)
+    # plot_challenge_question_3(bundle_path)
